@@ -13,6 +13,8 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const glowAnim = new Animated.Value(0);
 
   useEffect(() => {
+    console.log('[v0] SplashScreen mounted');
+    
     Animated.parallel([
       Animated.timing(fadeAnim, {
         toValue: 1,
@@ -35,8 +37,9 @@ function SplashScreen({ onFinish }: { onFinish: () => void }) {
     ]).start();
 
     const timer = setTimeout(() => {
+      console.log('[v0] SplashScreen timer finished, calling onFinish');
       onFinish();
-    }, 10000);
+    }, 3000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -106,9 +109,14 @@ const splashStyles = StyleSheet.create({
 export default function RootLayout() {
   useFrameworkReady();
   const [showSplash, setShowSplash] = useState(true);
+  
+  console.log('[v0] RootLayout render, showSplash:', showSplash);
 
   if (showSplash) {
-    return <SplashScreen onFinish={() => setShowSplash(false)} />;
+    return <SplashScreen onFinish={() => {
+      console.log('[v0] Setting showSplash to false');
+      setShowSplash(false);
+    }} />;
   }
 
   return (

@@ -18,6 +18,8 @@ import { ref, get } from 'firebase/database';
 import { auth, database } from '@/config/firebase';
 
 export default function LoginPage() {
+  console.log('[v0] LoginPage mounted');
+  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
