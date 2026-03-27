@@ -1,4 +1,5 @@
- import 'react-native-get-random-values';
+ // On native, you may need 'react-native-get-random-values' imported in your app entry
+// On web, crypto.getRandomValues is natively supported by browsers
 import { initializeApp } from 'firebase/app';
 import { getDatabase } from 'firebase/database';
 import { getAuth } from 'firebase/auth';

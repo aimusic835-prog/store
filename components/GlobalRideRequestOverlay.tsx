@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { Platform } from 'react-native';
 import { ref, update, remove, onValue, off } from 'firebase/database';
 import { database, auth } from '@/config/firebase';
 import RideRequestPopup from '@/components/RideRequestPopup';
 import { useIncomingRides } from '@/context/IncomingRidesContext';
-import * as Location from 'expo-location';
 
 export default function GlobalRideRequestOverlay() {
   const { incomingRide, showIncomingRidePopup, dismissIncomingRide } = useIncomingRides();
@@ -44,14 +44,33 @@ export default function GlobalRideRequestOverlay() {
       const photo = driverData.profile?.profilePicture || '';
       const rating = driverData.rating || 5.0;
 
-      const { status } = await Location.requestForegroundPermissionsAsync();
       let latitude = 0;
       let longitude = 0;
 
-      if (status === 'granted') {
-        const location = await Location.getCurrentPositionAsync({});
-        latitude = location.coords.latitude;
-        longitude = location.coords.longitude;
+      // Only use expo-location on native platforms
+      if (Platform.OS !== 'web') {
+        try {
+          const Location = await import('expo-location');
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          if (status === 'granted') {
+            const location = await Location.getCurrentPositionAsync({});
+            latitude = location.coords.latitude;
+            longitude = location.coords.longitude;
+          }
+        } catch (e) {
+          console.warn('Location not available:', e);
+        }
+      } else {
+        // Use browser geolocation API for web
+        try {
+          const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+            navigator.geolocation.getCurrentPosition(resolve, reject);
+          });
+          latitude = position.coords.latitude;
+          longitude = position.coords.longitude;
+        } catch (e) {
+          console.warn('Web geolocation not available:', e);
+        }
       }
 
       await update(ref(database, `rideRequests/${incomingRide.id}`), {

@@ -11,8 +11,58 @@ import {
 } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import { BlurView } from 'expo-blur';
-import * as Location from 'expo-location';
 import { database, auth } from '@/config/firebase';
+
+// Helper functions to handle location across platforms
+const getLocation = async () => {
+  if (Platform.OS !== 'web') {
+    const Location = await import('expo-location');
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status === 'granted') {
+      const location = await Location.getCurrentPositionAsync({});
+      return location.coords;
+    }
+    return null;
+  } else {
+    return new Promise<{ latitude: number; longitude: number; heading?: number } | null>((resolve) => {
+      if (!navigator.geolocation) {
+        resolve(null);
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        (pos) => resolve({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, heading: pos.coords.heading || 0 }),
+        () => resolve(null)
+      );
+    });
+  }
+};
+
+const watchLocation = async (callback: (coords: { latitude: number; longitude: number; heading?: number }) => void) => {
+  if (Platform.OS !== 'web') {
+    const Location = await import('expo-location');
+    const { status } = await Location.requestForegroundPermissionsAsync();
+    if (status !== 'granted') return null;
+    
+    return await Location.watchPositionAsync(
+      {
+        accuracy: Location.Accuracy.High,
+        timeInterval: 5000,
+        distanceInterval: 10,
+      },
+      (loc) => {
+        callback({ latitude: loc.coords.latitude, longitude: loc.coords.longitude, heading: loc.coords.heading || 0 });
+      }
+    );
+  } else {
+    if (!navigator.geolocation) return null;
+    const watchId = navigator.geolocation.watchPosition(
+      (pos) => callback({ latitude: pos.coords.latitude, longitude: pos.coords.longitude, heading: pos.coords.heading || 0 }),
+      () => {},
+      { enableHighAccuracy: true }
+    );
+    return { remove: () => navigator.geolocation.clearWatch(watchId) };
+  }
+};
 import { ref, update, onValue, off, remove } from 'firebase/database';
 import { Home, Mail, Clock, Settings, MapPin, Shield } from 'lucide-react-native';
 import RideRequestPopup from '@/components/RideRequestPopup';
@@ -173,43 +223,33 @@ export default function Dashboard() {
     const uid = auth.currentUser?.uid;
     if (!uid) return;
 
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status !== 'granted') return;
+    const subscription = await watchLocation(async (coords) => {
+      const { latitude, longitude, heading } = coords;
 
-    const subscription = await Location.watchPositionAsync(
-      {
-        accuracy: Location.Accuracy.High,
-        timeInterval: 5000,
-        distanceInterval: 10,
-      },
-      async (loc: Location.LocationObject) => {
-        const { latitude, longitude, heading } = loc.coords;
+      setCurrentLocation({ latitude, longitude });
 
-        setCurrentLocation({ latitude, longitude });
+      await update(ref(database, `drivers/${uid}/location`), {
+        latitude,
+        longitude,
+        heading: heading || 0,
+        updatedAt: Date.now(),
+      });
 
-        await update(ref(database, `drivers/${uid}/location`), {
+      await update(ref(database, `drivers/${uid}`), {
+        lat: latitude,
+        lng: longitude,
+        lastActive: Date.now(),
+      });
+
+      if (isBusy && activeRide) {
+        await update(ref(database, `rides/${activeRide.id}/location`), {
           latitude,
           longitude,
-          heading: heading || 0,
-          updatedAt: Date.now(),
         });
-
-        await update(ref(database, `drivers/${uid}`), {
-          lat: latitude,
-          lng: longitude,
-          lastActive: Date.now(),
-        });
-
-        if (isBusy && activeRide) {
-          await update(ref(database, `rides/${activeRide.id}/location`), {
-            latitude,
-            longitude,
-          });
-        }
-
-        console.log('📍 Driver location updated:', latitude, longitude);
       }
-    );
+
+      console.log('📍 Driver location updated:', latitude, longitude);
+    });
     setLocationSubscription(subscription);
   };
 
@@ -252,10 +292,9 @@ export default function Dashboard() {
     const photo = driverData.profile?.profilePicture || '';
     const rating = driverData.rating || 5.0;
 
-    const { status } = await Location.requestForegroundPermissionsAsync();
-    if (status === 'granted') {
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude, heading } = location.coords;
+    const coords = await getLocation();
+    if (coords) {
+      const { latitude, longitude, heading } = coords;
 
       await update(ref(database, `drivers/${uid}`), {
         name: driverName,
