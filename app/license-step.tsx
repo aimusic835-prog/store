@@ -136,9 +136,7 @@ export default function DriverLicensePage() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <X color="#fff" size={28} />
-        </TouchableOpacity>
+        <View style={{ width: 28 }} />
         <Text style={styles.headerText}>Driver license</Text>
         <TouchableOpacity>
           <Text style={styles.helpText}>Help</Text>
@@ -303,11 +301,11 @@ const styles = StyleSheet.create({
   progressContainer: { marginBottom: 16 },
   progressText: { fontSize: 16, fontWeight: '600', color: '#fff', marginBottom: 12, textAlign: 'center' },
   progressBarBackground: { height: 6, backgroundColor: '#3a3a3a', borderRadius: 4, overflow: 'hidden' },
-  progressBarFill: { height: '100%', backgroundColor: '#BFFF00', borderRadius: 4 },
+  progressBarFill: { height: '100%', backgroundColor: '#B19CD9', borderRadius: 4 },
   buttonContainer: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 12 },
   backButton: { backgroundColor: '#3a3a3a', borderRadius: 12, paddingVertical: 16, paddingHorizontal: 24 },
   backButtonText: { fontSize: 18, fontWeight: '600', color: '#fff' },
-  nextButton: { flex: 1, backgroundColor: '#BFFF00', borderRadius: 12, paddingVertical: 16, paddingHorizontal: 24,
+  nextButton: { flex: 1, backgroundColor: '#B19CD9', borderRadius: 12, paddingVertical: 16, paddingHorizontal: 24,
     flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 },
   nextButtonDisabled: { backgroundColor: '#3a3a3a', opacity: 0.5 },
   nextButtonText: { fontSize: 18, fontWeight: '600', color: '#000' },

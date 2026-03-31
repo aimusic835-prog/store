@@ -144,14 +144,14 @@ export default function PersonalPicturePage() {
 
         <View style={styles.instructionsContainer}>
           <View style={styles.instructionRow}>
-            <Check color="#c8ff00" size={24} />
+            <Check color="#B19CD9" size={24} />
             <Text style={styles.instructionText}>
               Take a clear picture of yourself in good light, as shown below
             </Text>
           </View>
 
           <View style={styles.instructionRow}>
-            <Check color="#c8ff00" size={24} />
+            <Check color="#B19CD9" size={24} />
             <Text style={styles.instructionText}>
               No filters, sunglasses, or masks
             </Text>
@@ -224,11 +224,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   examplePlaceholder: {
-    width: 280,
-    height: 280,
+    width: 200,
+    height: 200,
     borderRadius: 20,
     borderWidth: 3,
-    borderColor: '#c8ff00',
+    borderColor: '#B19CD9',
     backgroundColor: '#2a2a2a',
     justifyContent: 'center',
     alignItems: 'center',
@@ -243,7 +243,7 @@ const styles = StyleSheet.create({
     paddingTop: 16,
   },
   takeButton: {
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     padding: 18,
     alignItems: 'center',
@@ -320,7 +320,7 @@ const styles = StyleSheet.create({
   },
   confirmButton: {
     flex: 1,
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     padding: 18,
     flexDirection: 'row',

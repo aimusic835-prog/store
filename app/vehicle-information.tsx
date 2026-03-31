@@ -494,11 +494,11 @@ export default function VehicleInformation() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()} style={styles.closeButton}>
-          <X color="#fff" size={28} />
+        <View style={{ width: 28 }} />
+        <Text style={styles.headerTitle}>Vehicle Information</Text>
+        <TouchableOpacity>
+          <Text style={styles.helpText}>Help</Text>
         </TouchableOpacity>
-        <Text style={styles.closeText}>Close</Text>
-        <Text style={styles.helpText}>Help</Text>
       </View>
 
       <ScrollView style={styles.content}>
@@ -780,6 +780,11 @@ const styles = StyleSheet.create({
   closeButton: {
     padding: 8,
   },
+  headerTitle: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
+  },
   closeText: {
     color: '#fff',
     fontSize: 16,
@@ -910,7 +915,7 @@ const styles = StyleSheet.create({
   },
   progressFill: {
     height: '100%',
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
   },
   footerButtons: {
     flexDirection: 'row',
@@ -931,7 +936,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flex: 2,
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     padding: 16,
     borderRadius: 12,
     marginLeft: 8,
@@ -989,7 +994,7 @@ const styles = StyleSheet.create({
     paddingBottom: 32,
   },
   primaryButton: {
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     padding: 16,
     borderRadius: 12,
     marginBottom: 12,
@@ -1099,7 +1104,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   categoryBadge: {
-    color: '#BFFF00',
+    color: '#B19CD9',
     fontSize: 12,
     backgroundColor: '#333',
     paddingHorizontal: 8,

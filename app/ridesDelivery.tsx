@@ -196,7 +196,7 @@ export default function RidesDelivery() {
       </ScrollView>
 
       <RegistrationFooter
-        currentStep={3}
+        currentStep={5}
         totalSteps={totalSteps}
         onNext={handleNext}
         canGoNext={selected !== null}
@@ -248,7 +248,7 @@ const styles = StyleSheet.create({
     borderColor: '#2a2a2a',
   },
   selectedCard: {
-    borderColor: '#BFFF00',
+    borderColor: '#B19CD9',
     backgroundColor: '#333',
   },
   cardHeader: {

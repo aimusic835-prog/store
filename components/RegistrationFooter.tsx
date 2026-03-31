@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     borderRadius: 4,
   },
   buttonContainer: {
@@ -123,7 +123,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flex: 1,
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     paddingVertical: 16,
     paddingHorizontal: 24,

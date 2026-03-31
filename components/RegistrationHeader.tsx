@@ -1,5 +1,4 @@
  import { View, Text, TouchableOpacity, StyleSheet, Platform } from 'react-native';
-import { X } from 'lucide-react-native';
 import { router } from 'expo-router';
 
 interface RegistrationHeaderProps {
@@ -13,19 +12,9 @@ export default function RegistrationHeader({
   showHelp = true,
   onClose,
 }: RegistrationHeaderProps) {
-  const handleClose = () => {
-    if (onClose) {
-      onClose();
-    } else {
-      router.back();
-    }
-  };
-
   return (
     <View style={styles.header}>
-      <TouchableOpacity onPress={handleClose} style={styles.closeButton}>
-        <X color="#fff" size={28} />
-      </TouchableOpacity>
+      <View style={styles.placeholder} />
       <Text style={styles.headerText}>{title}</Text>
       {showHelp ? (
         <TouchableOpacity>
@@ -48,8 +37,8 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     backgroundColor: '#1a1a1a',
   },
-  closeButton: {
-    width: 32,
+  placeholder: {
+    width: 40,
   },
   headerText: {
     color: '#fff',

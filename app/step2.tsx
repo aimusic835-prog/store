@@ -82,10 +82,11 @@ export default function PhoneVerificationPage() {
             <TextInput
               style={styles.phoneInput}
               value={phone}
-              onChangeText={setPhone}
+              onChangeText={(text) => setPhone(text.slice(0, 9))}
               placeholder="Mobile number"
               placeholderTextColor="#666"
               keyboardType="phone-pad"
+              maxLength={9}
             />
           </View>
         </View>
@@ -188,18 +189,20 @@ const styles = StyleSheet.create({
   },
   phoneInputContainer: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 8,
   },
   countryButton: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#2a2a2a',
     borderRadius: 12,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     paddingVertical: 16,
     borderWidth: 2,
     borderColor: '#3a3a3a',
-    gap: 8,
+    gap: 4,
+    minWidth: 100,
+    maxWidth: 110,
   },
   flag: {
     fontSize: 24,
@@ -218,7 +221,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#fff',
     borderWidth: 2,
-    borderColor: '#00d395',
+    borderColor: '#B19CD9',
   },
   termsSection: {
     marginBottom: 24,
@@ -240,8 +243,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   checkboxChecked: {
-    backgroundColor: '#00d395',
-    borderColor: '#00d395',
+    backgroundColor: '#B19CD9',
+    borderColor: '#B19CD9',
   },
   checkmark: {
     color: '#fff',

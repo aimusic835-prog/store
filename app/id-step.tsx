@@ -271,9 +271,7 @@ export default function IdStepPage() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.back()}>
-          <X color="#fff" size={28} />
-        </TouchableOpacity>
+        <View style={{ width: 28 }} />
         <Text style={styles.headerText}>Id number</Text>
         <TouchableOpacity>
           <Text style={styles.helpText}>Help</Text>
@@ -329,12 +327,12 @@ export default function IdStepPage() {
 
       <View style={styles.footer}>
         <View style={styles.progressContainer}>
-          <Text style={styles.progressText}>5 of {totalSteps}</Text>
+          <Text style={styles.progressText}>3 of {totalSteps}</Text>
           <View style={styles.progressBarBackground}>
             <View
               style={[
                 styles.progressBarFill,
-                { width: `${(5 / totalSteps) * 100}%` },
+                { width: `${(3 / totalSteps) * 100}%` },
               ]}
             />
           </View>
@@ -473,7 +471,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     borderRadius: 4,
   },
   buttonContainer: {
@@ -495,7 +493,7 @@ const styles = StyleSheet.create({
   },
   nextButton: {
     flex: 1,
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     padding: 16,
     flexDirection: 'row',
@@ -523,7 +521,7 @@ const styles = StyleSheet.create({
   },
   checkmark: {
     fontSize: 20,
-    color: '#c8ff00',
+    color: '#B19CD9',
     marginRight: 12,
     marginTop: 2,
   },
@@ -546,7 +544,7 @@ const styles = StyleSheet.create({
   illustrationBox: {
     width: 200,
     height: 200,
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
@@ -555,7 +553,7 @@ const styles = StyleSheet.create({
     fontSize: 80,
   },
   primaryButton: {
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     padding: 18,
     alignItems: 'center',
@@ -641,7 +639,7 @@ const styles = StyleSheet.create({
   },
   uploadButton: {
     flex: 1,
-    backgroundColor: '#c8ff00',
+    backgroundColor: '#B19CD9',
     borderRadius: 12,
     padding: 18,
     alignItems: 'center',

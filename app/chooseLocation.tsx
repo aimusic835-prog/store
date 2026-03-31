@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
   },
   progressBarFill: {
     height: '100%',
-    backgroundColor: '#BFFF00',
+    backgroundColor: '#B19CD9',
     borderRadius: 4,
   },
   buttonContainer: {
